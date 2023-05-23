@@ -1,0 +1,12 @@
+.mekatron-conatiner {
+    padding: 10px;
+}
+
+.mekatron-alert {
+    color: red !important;
+}
+
+.mekatron-alert-back {
+    background-color: darkred !important;
+    color: wheat !important;
+}
