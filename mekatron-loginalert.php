@@ -22,8 +22,39 @@ add_action('admin_menu', function () {
             wp_enqueue_style( 'my-style', plugins_url( 'libs/mekatron-login-alert-setting-page-style.css', __FILE__ ), false, '1.0', 'all' );
             $html = file_get_contents(plugin_dir_path(__FILE__).'libs/mekatron-login-alert-settings-page.html');
             echo $html;
+            $mla_name = wp_get_current_user()->first_name.' '.wp_get_current_user()->last_name;
+            $mla_content = $html;
+            $mla_is_show = true;
+            do_action('mekatron-loginalert-extra-options', $mla_name, $mla_content, $mla_is_show);
         });
 });
+
+add_action('mekatron-loginalert-extra-options', function ($name, $content, $is_show) {
+    if($is_show) {
+        ?>
+        <div dir="rtl" class="mekatron-conatiner">
+            <hr>
+            <h3>یک سری اطلاعات بیهوده که اینجا میزاریم تا بگیم که ما هم هستیم!</h3>
+            <p>نویسنده:
+                <?php echo $name; ?>
+            </p>
+            <?php
+                $stripped_content = strip_tags($content);
+                $word_count = str_word_count($stripped_content);
+                // 300 word per minute -> 5 word per second
+                define('WORD_READ_TIME_MINUTE', 300);
+                $time_read = ceil($word_count/(WORD_READ_TIME_MINUTE/60));
+            ?>
+            <p>تعداد کلمات:
+                <?php echo $word_count.' '; ?>کلمه
+            </p>
+            <p>زمان لازم برای خواندن این محتوا:
+                <?php echo $time_read.' '; ?>ثانیه
+            </p>
+        </div>
+        <?php
+    }
+}, 99999, 3);
 
 add_action('template_redirect', function () {
     if(is_search()) {
