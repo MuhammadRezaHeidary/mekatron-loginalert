@@ -25,8 +25,50 @@ add_action('admin_menu', function () {
             $mla_name = wp_get_current_user()->first_name.' '.wp_get_current_user()->last_name;
             $mla_content = $html;
             $mla_is_show = true;
-            do_action('mekatron-loginalert-extra-options', $mla_name, $mla_content, $mla_is_show);
+//            do_action('mekatron-loginalert-extra-options', $mla_name, $mla_content, $mla_is_show);
+            $mla = [
+                'name' => $mla_name,
+                'content' => $mla_content,
+                'isshow' => $mla_is_show,
+            ];
+//            do_action('mekatron-loginalert-extra-options', $mla['name'], $mla['content'], $mla['isshow']);
+            do_action_ref_array('mekatron-loginalert-extra-options', $mla);
+
+            $mla_some_text = 'Kraken';
+            do_action_ref_array('mekatron-loginalert-some-text', [&$mla_some_text]);
+            echo 'Alternative Monster: '.$mla_some_text;
+
+            $mla_monsters = new stdClass();
+            $mla_monsters->name = 'Kraken';
+            do_action_ref_array('mekatron-loginalert-some-object', [$mla_monsters]);
+            echo 'Alternative Monster: '.$mla_monsters->name;
+
         });
+});
+
+add_action('mekatron-loginalert-some-object', function ($mla_monsters) {
+    ?>
+    <hr>
+    <p>Monster:
+        <?php
+        echo $mla_monsters->name;
+        $mla_monsters->name = 'Meg';
+        ?>
+    </p>
+    <?php
+});
+
+
+add_action('mekatron-loginalert-some-text', function (&$mla_some_text) {
+    ?>
+    <hr>
+    <p>Monster:
+        <?php
+            echo $mla_some_text;
+            $mla_some_text = 'Godzilla';
+        ?>
+    </p>
+    <?php
 });
 
 add_action('mekatron-loginalert-extra-options', function ($name, $content, $is_show) {
