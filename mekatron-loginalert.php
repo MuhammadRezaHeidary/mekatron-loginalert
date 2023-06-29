@@ -131,3 +131,59 @@ add_action('wp_head', function () {
 add_action('wp_footer', function () {
     echo "<!-- This is Footer -->".PHP_EOL;
 }, 9999);
+
+/*
+function mekatron_custom_head() {
+    $my_action = current_action();
+    echo '<!-- Mekatron => ' . $my_action . '-->' . PHP_EOL;
+    if(doing_action('admin_head')) {
+        echo '<!-- Welcome to Admin -->' . PHP_EOL;
+    }
+
+    var_dump(has_action('wp_footer', 'the_block_template_skip_link'));
+    var_dump(has_action('wp_footer', 'wp_admin_bar_render'));
+    var_dump(has_action('wp_footer', 'some_function'));
+    var_dump(has_action('wp_footer'));
+
+    var_dump(did_action('template_redirect'));
+    var_dump(did_action('registered_post_type'));
+    var_dump(did_action('plugin_loaded'));
+
+    if(has_action('wp_footer', 'the_block_template_skip_link')) {
+//    if(has_action('wp_footer', 'some_function')) {
+//    if(has_action('wp_footer')) {
+        echo '<!-- has action -->' . PHP_EOL;
+    }
+    else {
+        echo '<!-- no action -->' . PHP_EOL;
+    }
+}
+add_action('wp_head', 'mekatron_custom_head');
+add_action('admin_head', 'mekatron_custom_head');
+*/
+
+// remove action wp_head with priority 10
+/*remove_action('wp_head','mekatron_custom_head');*/
+
+// remove action wp_head with priority 15
+/*remove_action('wp_head','mekatron_custom_head',15);*/
+
+// remove all actions of wp_head
+/*remove_all_actions('wp_head');*/
+
+// remove all actions of wp_head with priority 10
+/*remove_all_actions('wp_head', 10);*/
+
+/*
+if(isset($_GET['show_filters'])) {
+    global $wp_filter;
+    print_r($wp_filter);
+    exit;
+}
+
+if(isset($_GET['show_actions'])) {
+    global $wp_actions;
+    print_r($wp_actions);
+    exit;
+}
+*/
